@@ -22,4 +22,4 @@ class Chat(Base):
 
     keywords = Column(Text, nullable=True)
 
-    owner_id = Column(Integer, ForeignKey(User.user_id), nullable=False)
+    owner_id = Column(BigInteger, ForeignKey(User.user_id), nullable=False)
