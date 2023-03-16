@@ -1,1 +1,1 @@
-from .main import CallbackDictKeysFilter
+from .chat import KeywordsMessageFilter

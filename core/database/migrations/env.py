@@ -8,10 +8,13 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from core.database import models
+from core.misc import DBKeys
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+config.set_main_option('sqlalchemy.url', DBKeys.connection_string)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -48,6 +51,7 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        compare_type=True
     )
 
     with context.begin_transaction():
@@ -74,6 +78,11 @@ async def run_async_migrations() -> None:
     )
 
     async with connectable.connect() as connection:
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            compare_type=True
+        )
         await connection.run_sync(do_run_migrations)
 
     await connectable.dispose()

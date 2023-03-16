@@ -1,8 +1,7 @@
 import logging
 
 from aiogram import Router, F, types
-from aiogram.filters import CommandStart, Command
-from aiogram.fsm.context import FSMContext
+from aiogram.filters import CommandStart
 
 from core.database.methods import get_or_create_tg_user
 from core.handlers.user.settings import settings_router

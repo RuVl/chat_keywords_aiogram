@@ -1,5 +1,4 @@
 import logging
-from typing import Union
 
 from aiogram import types, F, Router
 from aiogram.filters import Command
@@ -24,7 +23,7 @@ async def chats(msg: types.Message, state: FSMContext):
     logging.info(f'Command /chats from user: {msg.from_user.id}')
 
     user = await get_or_create_tg_user(msg.from_user)
-    if user:
+    if user and user.chats:
         await state.update_data(user=user)
         await state.set_state(UserSettings.CHOOSE_CHAT)
         await msg.answer('Выберите чаты: ', reply_markup=inline_select_chat(user.chats))
@@ -148,7 +147,7 @@ async def delete_keywords(msg: types.Message, state: FSMContext):
     if chat is None:
         return
 
-    keywords = msg.text.strip().lower().split(';')
+    keywords = parse_keywords(msg.text)
     chat = await delete_chat_keywords(keywords, chat)
     await state.update_data(chat=chat)
 

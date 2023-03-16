@@ -28,7 +28,7 @@ def upgrade() -> None:
                     sa.Column('chat_id', sa.BigInteger(), nullable=False),
                     sa.Column('chat_title', sa.String(), nullable=False),
                     sa.Column('keywords', sa.Text(), nullable=True),
-                    sa.Column('owner_id', sa.Integer(), nullable=False),
+                    sa.Column('owner_id', sa.BigInteger(), nullable=False),
                     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
                     sa.PrimaryKeyConstraint('id'),
                     sa.UniqueConstraint('chat_id')
