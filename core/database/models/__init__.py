@@ -1,1 +1,1 @@
-from .main import User, Chat
+from .main import Base, User, Chat
