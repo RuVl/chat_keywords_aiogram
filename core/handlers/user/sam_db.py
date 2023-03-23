@@ -45,7 +45,10 @@ async def action_selected(callback: types.CallbackQuery, state: FSMContext):
             data = '\n'.join(map(str, db))
 
             await callback.answer()
-            await callback.message.answer(data)
+            if db:
+                await callback.message.answer(data)
+            else:
+                await callback.message.answer('В базе пока нет данных.')
 
         case 'check_db':
             await state.set_state(SamDBSettings.CHECK_DB)
