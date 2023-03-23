@@ -64,20 +64,20 @@ def inline_db_settings() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.row(
         InlineKeyboardButton(
-            text='Добавить в базу',
+            text='Добавить',
             callback_data='add_db'
         ),
         InlineKeyboardButton(
-            text='Удалить из базы',
+            text='Удалить',
             callback_data='delete_db'
         ),
         InlineKeyboardButton(
-            text='Показать базу',
+            text='Показать',
             callback_data='show_db'
         )
     ).row(
         InlineKeyboardButton(
-            text='Проверить в базе данных',
+            text='Проверить в базе',
             callback_data='check_db'
         )
     )
