@@ -11,14 +11,18 @@ from core.keyboards import inline_select_chat, inline_chat_settings, inline_keyw
 from core.misc import parse_keywords, get_chat_from_state
 from core.state_machines import UserSettings
 
-settings_router = Router()
+chats_router = Router()
 
-settings_router.my_chat_member.filter(
+chats_router.message.filter(
     F.chat.type == 'private',
 )
 
+chats_router.callback_query.filter(
+    F.message.chat.type == 'private',
+)
 
-@settings_router.message(Command('chats'))
+
+@chats_router.message(Command('chats'))
 async def chats(msg: types.Message, state: FSMContext):
     logging.info(f'Command /chats from user: {msg.from_user.id}')
 
@@ -31,7 +35,7 @@ async def chats(msg: types.Message, state: FSMContext):
         await msg.answer('Для начала добавьте меня в чаты.')
 
 
-@settings_router.callback_query(UserSettings.CHOOSE_CHAT)
+@chats_router.callback_query(UserSettings.CHOOSE_CHAT)
 async def chat_selected(callback: types.CallbackQuery, state: FSMContext):
     logging.info(f'Callback data {callback.data} from user: {callback.from_user.id}')
 
@@ -57,7 +61,7 @@ async def chat_selected(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.edit_text(f'Настройки чата {chat.chat_title}', reply_markup=inline_chat_settings())
 
 
-@settings_router.callback_query(UserSettings.CHAT_SETTINGS)
+@chats_router.callback_query(UserSettings.CHAT_SETTINGS)
 async def chat_settings(callback: types.CallbackQuery, state: FSMContext):
     logging.info(f'Callback data {callback.data} from user: {callback.from_user.id}')
 
@@ -83,7 +87,7 @@ async def chat_settings(callback: types.CallbackQuery, state: FSMContext):
             await callback.message.edit_text('Выберите действие с ключевыми словами', reply_markup=inline_keywords_settings())
 
 
-@settings_router.callback_query(UserSettings.KEYWORDS_HANDLER)
+@chats_router.callback_query(UserSettings.KEYWORDS_HANDLER)
 async def keywords_settings(callback: types.CallbackQuery, state: FSMContext):
     logging.info(f'Callback data {callback.data} from user: {callback.from_user.id}')
 
@@ -121,7 +125,7 @@ async def keywords_settings(callback: types.CallbackQuery, state: FSMContext):
                                           '/cancel для отмены')
 
 
-@settings_router.message(~Command('cancel'), UserSettings.ADDING_KEYWORDS)
+@chats_router.message(~Command('cancel'), UserSettings.ADDING_KEYWORDS)
 async def add_keywords(msg: types.Message, state: FSMContext):
     logging.info(f'Add keywords from user: {msg.from_user.id}')
 
@@ -139,7 +143,7 @@ async def add_keywords(msg: types.Message, state: FSMContext):
                      '/cancel для отмены')
 
 
-@settings_router.message(~Command('cancel'), UserSettings.DELETING_KEYWORDS)
+@chats_router.message(~Command('cancel'), UserSettings.DELETING_KEYWORDS)
 async def delete_keywords(msg: types.Message, state: FSMContext):
     logging.info(f'Delete keywords from user: {msg.from_user.id}')
 
@@ -157,8 +161,8 @@ async def delete_keywords(msg: types.Message, state: FSMContext):
                      '/cancel для отмены')
 
 
-@settings_router.message(Command('cancel'), UserSettings.ADDING_KEYWORDS)
-@settings_router.message(Command('cancel'), UserSettings.DELETING_KEYWORDS)
+@chats_router.message(Command('cancel'), UserSettings.ADDING_KEYWORDS)
+@chats_router.message(Command('cancel'), UserSettings.DELETING_KEYWORDS)
 async def cancel(msg: types.Message, state: FSMContext):
     logging.info(f'Cancel command from user: {msg.from_user.id}')
 

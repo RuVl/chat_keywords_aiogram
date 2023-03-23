@@ -4,7 +4,8 @@ from aiogram import Router, F, types
 from aiogram.filters import CommandStart
 
 from core.database.methods import get_or_create_tg_user
-from core.handlers.user.settings import settings_router
+from .chats import chats_router
+from .sam_db import sam_db_router
 
 user_router = Router()
 
@@ -12,7 +13,8 @@ user_router.message.filter(
     F.chat.type == 'private',
 )
 
-user_router.include_router(settings_router)
+user_router.include_router(chats_router)
+user_router.include_router(sam_db_router)
 
 
 @user_router.message(CommandStart())

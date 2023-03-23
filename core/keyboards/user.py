@@ -58,3 +58,28 @@ def inline_keywords_settings() -> InlineKeyboardMarkup:
     )
 
     return builder.as_markup()
+
+
+def inline_db_settings() -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.row(
+        InlineKeyboardButton(
+            text='Добавить в базу',
+            callback_data='add_db'
+        ),
+        InlineKeyboardButton(
+            text='Удалить из базы',
+            callback_data='delete_db'
+        ),
+        InlineKeyboardButton(
+            text='Показать базу',
+            callback_data='show_db'
+        )
+    ).row(
+        InlineKeyboardButton(
+            text='Проверить в базе данных',
+            callback_data='check_db'
+        )
+    )
+
+    return builder.as_markup()
