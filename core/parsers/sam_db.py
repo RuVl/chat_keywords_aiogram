@@ -1,20 +1,6 @@
-import re
-import string
 from typing import Union
 
 from core.database.models import SamDB
-
-chars = f'[{re.escape(string.punctuation)}]'
-
-
-def parse_text(text: str) -> set[str]:
-    words = re.sub(chars, '', text.lower()).split()
-    return set(map(str.strip, words))
-
-
-def parse_keywords(parse_string: str) -> set[str]:
-    keywords = parse_string.strip().lower().split(';')
-    return set(map(str.strip, keywords))
 
 
 # Add strings like: firstname, lastname - number

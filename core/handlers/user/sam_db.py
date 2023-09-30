@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 
 from core.database.methods import get_sam_db, get_by_numbers, delete_sam_db, create_sam_dbs
 from core.keyboards.user import inline_db_settings
-from core.misc import parse_sam_db, parse_db_numbers
+from core.parsers import parse_sam_db, parse_db_numbers
 from core.state_machines import SamDBSettings
 
 sam_db_router = Router()

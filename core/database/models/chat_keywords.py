@@ -22,4 +22,7 @@ class Chat(Base):
 
     keywords: Mapped[str] = Column(Text, nullable=True)
 
+    raw_conditions: Mapped[str] = Column(String, nullable=True)
+    parsed_conditions: Mapped[str] = Column(String, nullable=True)
+
     owner_id: Mapped[int] = Column(BigInteger, ForeignKey(User.user_id), nullable=False)

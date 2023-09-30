@@ -1,1 +1,1 @@
-from .chat import KeywordsMessageFilter
+from .chat import KeywordsMessageFilter, ConditionsMessageFilter

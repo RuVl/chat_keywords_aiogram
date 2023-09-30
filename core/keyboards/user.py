@@ -12,7 +12,7 @@ def inline_select_chat(chats: List[Chat]) -> InlineKeyboardMarkup:
     for chat in chats:
         builder.add(InlineKeyboardButton(
             text=chat.chat_title,
-            callback_data=chat.id
+            callback_data=str(chat.id)
         ))
 
     return builder.as_markup()
@@ -24,6 +24,10 @@ def inline_chat_settings() -> InlineKeyboardMarkup:
         InlineKeyboardButton(
             text='Ключевые слова',
             callback_data='keywords'
+        ),
+        InlineKeyboardButton(
+            text='Сложные условия',
+            callback_data='conditions'
         )
     ).row(
         InlineKeyboardButton(
@@ -39,17 +43,17 @@ def inline_keywords_settings() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.row(
         InlineKeyboardButton(
-            text='Добавить',
-            callback_data='add_keywords'
+            text='Добавить условие',
+            callback_data='add_expression'
         ),
         InlineKeyboardButton(
-            text='Удалить',
-            callback_data='delete_keywords'
+            text='Удалить условие',
+            callback_data='delete_expression'
         ),
         InlineKeyboardButton(
-            text='Показать',
-            callback_data='show_keywords'
-        )
+            text='Показать условия',
+            callback_data='show_expressions'
+        ),
     ).row(
         InlineKeyboardButton(
             text='Назад',
@@ -57,6 +61,42 @@ def inline_keywords_settings() -> InlineKeyboardMarkup:
         )
     )
 
+    return builder.as_markup()
+
+
+def inline_conditions_settings() -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.row(
+        InlineKeyboardButton(
+            text='Добавить',
+            callback_data='add_expression'
+        ),
+        InlineKeyboardButton(
+            text='Удалить',
+            callback_data='delete_expression'
+        ),
+        InlineKeyboardButton(
+            text='Показать',
+            callback_data='show_expressions'
+        ),
+    ).row(
+        InlineKeyboardButton(
+            text='Назад',
+            callback_data='return'
+        )
+    )
+
+    return builder.as_markup()
+
+
+def inline_condition_help() -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.row(
+        InlineKeyboardButton(
+            text='Помощь',
+            callback_data='condition_help'
+        )
+    )
     return builder.as_markup()
 
 

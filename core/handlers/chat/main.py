@@ -3,12 +3,12 @@ import logging
 
 from aiogram import Router, types, F
 from aiogram.enums import ContentType
-from aiogram.filters import ChatMemberUpdatedFilter, JOIN_TRANSITION, LEAVE_TRANSITION
+from aiogram.filters import ChatMemberUpdatedFilter, JOIN_TRANSITION, LEAVE_TRANSITION, or_f
 
 from core import bot
 from core.database.methods import get_tg_user, create_chat, delete_chat
 from core.database.models import Chat
-from core.filters import KeywordsMessageFilter
+from core.filters import KeywordsMessageFilter, ConditionsMessageFilter
 
 chat_router = Router()
 
@@ -53,9 +53,10 @@ async def me_kicked(upd: types.ChatMemberUpdated):
 
 @chat_router.message(
     F.content_type == ContentType.TEXT,
-    KeywordsMessageFilter()
+    or_f(KeywordsMessageFilter(), ConditionsMessageFilter())
 )
 async def new_message(msg: types.Message, chat: Chat):
+    # TODO_later bot settings
     if msg.chat.username:
         await bot.send_message(chat.owner_id, f'https://t.me/{msg.chat.username}/{msg.message_id}', disable_notification=True)
     else:

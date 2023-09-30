@@ -8,3 +8,7 @@ class UserSettings(StatesGroup):
     KEYWORDS_HANDLER = State()  # Действие с ключевыми словами
     ADDING_KEYWORDS = State()  # Добавление ключевых слов
     DELETING_KEYWORDS = State()  # Удаление ключевых слов
+
+    CONDITION_HANDLER = State()  # Действие с условиями
+    ADDING_CONDITION = State()  # Добавление условия
+    DELETING_CONDITION = State()  # Удаление условия
