@@ -54,7 +54,7 @@ async def show_expressions(callback: types.CallbackQuery, state: FSMContext) -> 
     if chat is None:
         return 'Chat not found!'
 
-    return chat.raw_conditions.replace('^', '^\n')
+    return chat.raw_conditions.replace('^', '^\n') if chat.raw_conditions else 'Нет сложных условий!'
 
 
 @conditions_router.callback_query(UserSettings.ADDING_CONDITION)

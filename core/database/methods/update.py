@@ -50,19 +50,21 @@ async def add_chat_condition(raw_condition: str, parsed_condition: str, chat: Ch
 
 
 async def delete_chat_condition(raw_condition: str, parsed_condition: str, chat: Chat) -> Chat:
-    def _del(before: str, after: str, sep: str, empty='') -> str | None:
+    def _del(before: str, after: str, sep: str, empty='') -> str:
         if after and after[0] == sep:  # Remove sep
             after = after[1:]
         elif before and before[-1] == sep:
             before = before[:-1]
 
         result = before + after
-        return result if result != empty else None
+        return result if result != empty else ''
 
-    before, after = chat.raw_conditions.split(raw_condition, 1)
+    r = chat.raw_conditions.split(raw_condition, 1)
+    before, after = (r[0], r[1] if len(r) == 2 else '')
     raw = _del(before, after, '^')
 
-    before, after = chat.parsed_conditions.split(parsed_condition, 1)
+    p = chat.parsed_conditions.split(parsed_condition, 1)
+    before, after = (p[0], p[1] if len(p) == 2 else '')
     parsed = _del(before, after, '|', '(?:)')
 
     return await update_chat_condition(raw, parsed, chat.id)

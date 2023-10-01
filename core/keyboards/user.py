@@ -43,16 +43,16 @@ def inline_keywords_settings() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.row(
         InlineKeyboardButton(
-            text='Добавить условие',
-            callback_data='add_expression'
+            text='Добавить',
+            callback_data='add_keywords'
         ),
         InlineKeyboardButton(
-            text='Удалить условие',
-            callback_data='delete_expression'
+            text='Удалить',
+            callback_data='delete_keywords'
         ),
         InlineKeyboardButton(
-            text='Показать условия',
-            callback_data='show_expressions'
+            text='Показать',
+            callback_data='show_keywords'
         ),
     ).row(
         InlineKeyboardButton(
